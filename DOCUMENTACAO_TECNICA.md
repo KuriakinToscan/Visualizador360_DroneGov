@@ -1,6 +1,6 @@
 # 📘 Documentação Técnica de Referência — Visualizador 360° DroneGov
 
-**Versão da Documentação:** 0.9  
+**Versão da Documentação:** 1.0 (Lançamento Oficial)  
 **Data:** Julho de 2026  
 **Projeto:** Visualizador 360° DroneGov  
 **Repositório:** [https://github.com/KuriakinToscan/Visualizador360_DroneGov](https://github.com/KuriakinToscan/Visualizador360_DroneGov)
