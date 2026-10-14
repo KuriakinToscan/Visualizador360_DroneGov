@@ -1,4 +1,11 @@
 scratch_logo_dataurl.txt
 *.tmp
+*.temp
+*.log
 .DS_Store
 Thumbs.db
+.env
+.env.*
+.vscode/
+.idea/
+

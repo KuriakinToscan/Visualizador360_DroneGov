@@ -1,7 +1,7 @@
 # 📘 Documentação Técnica de Referência — Visualizador 360° DroneGov
 
-**Versão da Documentação:** 1.0 (Lançamento Oficial)  
-**Data:** Julho de 2026  
+**Versão da Documentação:** 1.1 (Shader Esférico Per-Pixel & Correção Nadir)  
+**Data:** 2026  
 **Projeto:** Visualizador 360° DroneGov  
 **Repositório:** [https://github.com/KuriakinToscan/Visualizador360_DroneGov](https://github.com/KuriakinToscan/Visualizador360_DroneGov)
 
@@ -82,18 +82,20 @@ $$\text{Coordenada} = DD^\circ\,MM'\,SS.S''\,\text{Direction}$$
 
 ---
 
-## 🌐 5. Motor de Renderização 3D (Three.js)
+## 🌐 5. Motor de Renderização 3D v1.1 (Three.js + Shader GLSL)
 
-O visualizador final gerado utiliza a biblioteca **Three.js (r128)** rodando em um elemento `<canvas>` WebGL.
+O visualizador final gerado utiliza a biblioteca **Three.js (r128)** combinada com um Shader customizado per-pixel em GLSL (`THREE.ShaderMaterial`) rodando em `<canvas>` WebGL.
 
-### 📐 Parâmetros da Geometria Esférica
+### 📐 Parâmetros da Geometria e Material Esférico
 
 | Parâmetro | Valor | Descrição |
 | :--- | :--- | :--- |
-| **Geometria** | `THREE.SphereGeometry(500, 96, 64)` | Esfera de raio 500 com alta densidade de malha para reduzir distorções nos polos. |
-| **Escala da Esfera** | `mesh.scale.x = -1` | Inversão da malha para permitir a visualização pelo lado interno da esfera. |
-| **Câmera** | `THREE.PerspectiveCamera(75, ratio, 1, 1100)` | Câmera de perspectiva com FOV ajustável entre 30° e 100°. |
-| **Textura** | `THREE.TextureLoader` | Carrega a imagem panorâmica embutida em Base64. |
+| **Geometria** | `THREE.SphereGeometry(500, 48, 48)` | Esfera de raio 500 com amostragem otimizada para o shader per-pixel. |
+| **Material / Shader** | `THREE.ShaderMaterial` (GLSL per-pixel) | Projeção trigonométrica equirretangular em fragment shader, eliminando o "beliscão polar" e distorções no Nadir (solo abaixo do drone). |
+| **Lado da Face** | `THREE.BackSide` | Renderização nativa da face interna da esfera. |
+| **Câmera** | `THREE.PerspectiveCamera` + Euler `'YXZ'` | Ordem de rotação Euler 'YXZ' para evitar *gimbal lock*; inclinação vertical permitida de -89.9° a +89.9°. |
+| **Filtragem de Textura** | `LinearFilter` (Sem Mipmaps) | `t.generateMipmaps = false`, garantindo filtragem linear pura e eliminando emendas no solo. |
+| **Assinatura de Saída** | UTF-8 BOM (`\uFEFF`) | Injetado no Blob para perfeita acentuação em ambientes Windows e navegadores internos do SEI. |
 
 ### 🎮 Interação e Controles
 

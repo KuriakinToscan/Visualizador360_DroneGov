@@ -1,6 +1,6 @@
-# Visualizador 360º — DroneGov
+# Visualizador 360º — DroneGov (Versão 1.1 — 2026)
 
-Visualizador e gerador de relatórios imersivos em 360° com extração de metadados EXIF e suporte a personalização de marca institucional, desenvolvido para integração com sistemas de processos eletrônicos (como o SEI - Sistema Eletrônico de Informações).
+Visualizador e gerador de relatórios imersivos em 360° com extração de metadados EXIF, motor de renderização com Shader Esférico Per-Pixel e suporte a personalização de marca institucional, desenvolvido para integração com sistemas de processos eletrônicos (como o SEI - Sistema Eletrônico de Informações).
 
 ---
 
@@ -9,6 +9,7 @@ Visualizador e gerador de relatórios imersivos em 360° com extração de metad
 * **Autor e Idealizador Original:** Gilberto Milhomem Marinho Filho.
 * **Modificações e Evolução de Interface (2026):** Kuriakin Toscan.
 * **Aprimoramento e Novas Funcionalidades (EXIF, Personalização de Marca, Descrição, 2026):** Luiz Augusto - ([github.com/laoc81](https://github.com/laoc81)).
+* **Atualização do Motor de Renderização v1.1 (Shader Esférico Per-Pixel / Nadir, 2026):** Kuriakin Toscan.
 * **Instituição:** IBAMA — Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis.
 * **Unidade de Origem:** DIPAM-TO — Divisão de Proteção Ambiental do Tocantins.
 
@@ -20,10 +21,16 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 
 ---
 
-## 🛠️ Características Técnicas e Funcionalidades
+## 🛠️ Características Técnicas e Funcionalidades (Versão 1.1)
 
 * **Arquitetura Autônoma (Zero Dependências Externas):** O arquivo HTML final possui todos os recursos (imagens, scripts, folhas de estilo e metadados) embutidos em Base64, funcionando 100% offline.
-* **Motor de Renderização 3D:** Utiliza a biblioteca **Three.js (r128)** para projeção esférica tridimensional via WebGL com aceleração por hardware.
+* **Motor de Renderização 3D v1.1 (Shader Esférico Per-Pixel GLSL):**
+  * Utiliza **Three.js (r128)** integrado a um shader customizado em GLSL (`THREE.ShaderMaterial`) com projeção trigonométrica matemática calculada pixel a pixel diretamente na GPU.
+  * **Eliminação Definitiva da Distorção do Nadir:** Corrige o "beliscão polar" e as deformações no solo logo abaixo do drone, assegurando fidelidade geométrica total na visualização de alvos terrestres.
+  * **Filtragem Bilinear Pura:** Desativação de mipmaps e forçamento de filtros lineares (`THREE.LinearFilter`) para evitar emendas, costuras polares e borrões de amostragem no solo.
+  * **Orientação Euleriana 'YXZ':** Ordem de rotação rigorosa na câmera para prevenir travamento de gimbal (*gimbal lock*) em inclinações acentuadas.
+  * **Visão Vertical Completa:** Amplitude de inclinação estendida de **-89.9° a +89.9°**, permitindo ao operador olhar diretamente para o solo (Nadir) e para o céu (Zênite) sem cortes ou artefatos.
+* **Compatibilidade Aprimorada UTF-8 BOM:** O gerador injeta o marcador de ordem de byte `\uFEFF` no arquivo HTML gerado, prevenindo problemas de acentuação em ambientes legados, navegadores embutidos e no SEI sob Windows.
 * **Navegação Suave e Controle Imersivo:** Suporte a rotação por arraste (com interpolação suave *lerp*), rotação automática (*auto-rotate*), controle de Zoom/FOV (Field of View) e redefinição de vista.
 * **Personalização de Marca Institucional (Persistente):**
   * **Logotipo Customizável:** Upload da marca da instituição/órgão (PNG, SVG, JPG, WebP) ou utilização do logotipo padrão DroneGov.
