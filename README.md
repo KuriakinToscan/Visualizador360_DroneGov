@@ -82,13 +82,18 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 | :--- | :--- |
 | [360_Gerador.html](file:///d:/Visualizador360_DroneGov/360_Gerador.html) | Aplicação web principal para configuração de marca, leitura de EXIF e geração do arquivo HTML 360° final. |
 | [README.md](file:///d:/Visualizador360_DroneGov/README.md) | Documentação de referência, guia de utilização e notas técnicas. |
-| `LogoDroneGov.png` / `.svg` / `.webp` | Arquivos de imagem do logotipo padrão DroneGov em diversos formatos. |
+| [DOCUMENTACAO_TECNICA.md](file:///d:/Visualizador360_DroneGov/DOCUMENTACAO_TECNICA.md) | Documentação técnica aprofundada de arquitetura, shaders e integração com o SEI. |
+| `LogoDroneGov.svg` / `LogoDroneGov.png` | Arquivos de imagem do logotipo oficial DroneGov (vetorial SVG e raster PNG). |
 | [LICENSE](file:///d:/Visualizador360_DroneGov/LICENSE) | Licença de código aberto (MIT License). |
 
 ---
 
 ## ⚠️ Solução de Problemas (Troubleshooting)
 
+* **Navegador Não Exibe Alterações / Persistência de Logo Antiga:** O gerador salva as preferências de marca no `localStorage` do navegador. Se as atualizações não aparecerem imediatamente após uma nova versão:
+  1. Clique no botão **"Restaurar Padrão"** na interface do gerador; ou
+  2. Faça uma limpeza forçada de cache pressionando **`Ctrl + F5`** (ou `Ctrl + Shift + R`); ou
+  3. No console do desenvolvedor (`F12`), execute `localStorage.clear()` e recarregue a página.
 * **Botão "Alterar Logo" Não Responde:** Certifique-se de que está utilizando a versão atualizada do `360_Gerador.html`, onde a inicialização da marca foi corrigida.
 * **Imagem Distorcida:** Verifique se a foto original foi capturada no modo panorâmico esférico equirretangular (proporção de aspecto 2:1).
 * **Arquivo Muito Grande para o SEI:** O limite prático de upload no SEI costuma ser entre 5 MB e 10 MB. Se a imagem for muito pesada, recomenda-se redimensioná-la para 4096×2048px ou comprimi-la ligeiramente antes do processamento.

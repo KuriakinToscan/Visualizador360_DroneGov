@@ -57,6 +57,9 @@ O gerador salva automaticamente as preferências do usuário no navegador para q
 3. **Conversão:** O arquivo é lido por um `FileReader` e convertido para uma Data URL (`data:image/...;base64,...`).
 4. **Restauração:** O botão `btn-reset-brand` limpa as chaves no `localStorage` e restaura as marcas e títulos originais oficiais do DroneGov.
 
+> [!TIP]
+> **Atualização de Versões e Cache:** Quando novas versões do gerador forem publicadas com logotipos ou títulos padrão atualizados, navegadores de usuários que já utilizaram o gerador anteriormente priorizarão as preferências salvas no `localStorage`. Para visualizar os novos padrões oficiais, basta clicar em **"Restaurar Padrão"** na interface ou executar `localStorage.clear()` no console.
+
 ---
 
 ## 📸 4. Módulo de Extração e Seleção Seletiva de Metadados EXIF
