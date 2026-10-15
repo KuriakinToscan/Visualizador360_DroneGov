@@ -33,14 +33,15 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 * **Compatibilidade Aprimorada UTF-8 BOM:** O gerador injeta o marcador de ordem de byte `\uFEFF` no arquivo HTML gerado, prevenindo problemas de acentuação em ambientes legados, navegadores embutidos e no SEI sob Windows.
 * **Navegação Suave e Controle Imersivo:** Suporte a rotação por arraste (com interpolação suave *lerp*), rotação automática (*auto-rotate*), controle de Zoom/FOV (Field of View) e redefinição de vista.
 * **Personalização de Marca Institucional (Persistente):**
-  * **Logotipo Customizável:** Upload da marca da instituição/órgão (PNG, SVG, JPG, WebP) ou utilização do logotipo padrão DroneGov.
-  * **Título e Subtítulo Editáveis:** Definição do título principal (padrão: `VISUALIZADOR 360º`) e subtítulo (padrão: `COM METADADOS`) exibidos no cabeçalho.
-  * **Persistência Local:** As preferências de marca são salvas automaticamente no `localStorage` do navegador para utilização em futuras gerações de relatórios.
-* **Extração Automática de Metadados EXIF:** Integração com a biblioteca `exif-js` para leitura automática dos dados armazenados na fotografia:
+  * **Logotipo Customizável:** Upload da marca da instituição/órgão (PNG, SVG, JPG, WebP) ou utilização do logotipo padrão oficial DroneGov (`LogoDroneGov.svg` embutido).
+  * **Título e Subtítulo Editáveis:** Definição do título principal (padrão oficial: `DRONEGOV`) e subtítulo (padrão oficial: `Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados`) exibidos no cabeçalho.
+  * **Persistência Local:** As preferências de marca são salvas automaticamente no `localStorage` do navegador para utilização em futuras gerações de relatórios, com opção de restauração instantânea aos padrões oficiais.
+* **Extração e Seleção Seletiva de Metadados EXIF:** Integração com a biblioteca `exif-js` para leitura automática dos dados armazenados na fotografia:
   * Modelo do drone/câmera;
   * Data e hora da captura;
   * Coordenadas GPS (Latitude e Longitude) com formatação em graus sexagesimais;
-  * Dimensões e proporção da imagem (recomendado 2:1 panorâmico).
+  * Dimensões e proporção da imagem (recomendado 2:1 panorâmico);
+  * **Controle de Exibição:** O usuário pode selecionar individualmente quais metadados (modelo, data/hora e/ou coordenadas GPS) serão incluídos nos badges do cabeçalho do visualizador final.
 * **Campo de Descrição Personalizada:** Inclusão de observações, notas de fiscalização ou contexto da inspeção no relatório final.
 
 ---
@@ -51,13 +52,14 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 
 1. Abra o arquivo [360_Gerador.html](file:///d:/Visualizador360_DroneGov/360_Gerador.html) em qualquer navegador moderno (Google Chrome, Microsoft Edge, Firefox, Brave).
 2. **(Opcional) Configurar a Marca Institucional:**
-   * Clique em **"Alterar Logo (Upload)"** para selecionar o arquivo de imagem da sua instituição (máx. 4MB).
-   * Altere os campos **"Título do Cabeçalho"** e **"Subtítulo"** conforme a necessidade da sua unidade.
+   * Clique em **"Alterar Logo (Upload)"** para selecionar o arquivo de imagem da sua instituição (máx. 4MB) ou mantenha a marca padrão DroneGov.
+   * Altere os campos **"Título Principal"** (padrão: `DRONEGOV`) e **"Subtítulo / Órgão"** (padrão: `Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados`).
    * Se desejar retornar às configurações padrão, clique em **"Restaurar Padrão"**.
 3. **Carregar a Imagem 360°:**
    * Arraste a imagem panorâmica esférica (proporção 2:1) para a área de soltura ou clique em **"Selecionar Arquivo"**.
-4. **Verificar os Metadados & Descrição:**
+4. **Verificar e Selecionar Metadados & Descrição:**
    * Confira as informações lidas da imagem (Modelo, Data/Hora, Coordenadas GPS).
+   * Marque ou desmarque os seletores para definir quais dados serão visíveis no relatório (`Modelo do Drone`, `Data e Hora`, `Coordenadas GPS`).
    * Preencha o campo **"Descrição / Observações"** com as notas técnicas ou de inspeção relevantes.
 5. **Gerar e Baixar:**
    * Clique em **"Gerar Visualizador 360°"** e salve o arquivo HTML gerado.

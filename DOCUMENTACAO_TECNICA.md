@@ -45,21 +45,21 @@ O arquivo [360_Gerador.html](file:///d:/Visualizador360_DroneGov/360_Gerador.htm
 ### 💾 Armazenamento no `localStorage`
 O gerador salva automaticamente as preferências do usuário no navegador para que sejam reutilizadas em gerações futuras:
 
-| Chave `localStorage` | Descrição | Valor Padrão |
+| Chave `localStorage` | Descrição | Valor Padrão Oficial |
 | :--- | :--- | :--- |
 | `dronegov_custom_logo` | String Base64 / Data URL da logo | Logotipo SVG DroneGov (`LOGO_DRONEGOV_SVG_BASE64`) |
-| `dronegov_custom_title` | Texto do Título Principal | `"VISUALIZADOR 360º"` |
-| `dronegov_custom_subtitle` | Texto do Subtítulo / Órgão | `"COM METADADOS"` |
+| `dronegov_custom_title` | Texto do Título Principal | `"DRONEGOV"` |
+| `dronegov_custom_subtitle` | Texto do Subtítulo / Órgão | `"Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados"` |
 
-### 🔄 Fluxo de Manipulação da Logo
+### 🔄 Fluxo de Manipulação da Marca
 1. **Upload:** O botão `btn-upload-logo` dispara o input de arquivo oculto `logo-file-input`.
 2. **Validação:** Imagens acima de 4MB são rejeitadas para evitar estouro de memória no `localStorage`.
 3. **Conversão:** O arquivo é lido por um `FileReader` e convertido para uma Data URL (`data:image/...;base64,...`).
-4. **Restauração:** O botão `btn-reset-brand` limpa as chaves no `localStorage` e restaura as marcas originais DroneGov.
+4. **Restauração:** O botão `btn-reset-brand` limpa as chaves no `localStorage` e restaura as marcas e títulos originais oficiais do DroneGov.
 
 ---
 
-## 📸 4. Módulo de Extração de Metadados EXIF
+## 📸 4. Módulo de Extração e Seleção Seletiva de Metadados EXIF
 
 A extração de metadados utiliza a biblioteca `exif-js` integrada no cabeçalho do documento.
 
@@ -76,8 +76,16 @@ var meta = {
 };
 ```
 
+### 🎛️ Filtro e Controle Seletivo de Exibição
+O gerador disponibiliza controles (*checkboxes*) para que o operador decida quais dados integrar ao cabeçalho do visualizador:
+* `check-meta-model`: ativa/desativa a inclusão do Modelo do Drone;
+* `check-meta-datetime`: ativa/desativa a inclusão da Data e Hora da Captura;
+* `check-meta-gps`: ativa/desativa a inclusão das Coordenadas Geográficas.
+
+Se todos forem desmarcados e nenhuma descrição for informada, o contêiner `.sub-info` é automaticamente omitido, gerando um cabeçalho compacto e focado exclusivamente na identidade visual.
+
 ### 🌐 Conversão de Coordenadas GPS
-As coordenadas GPS lidas do EXIF em formato racional de Graus, Minutos e Segundos são convertidas para o formato sexagesimal padrão:
+As coordenadas GPS lidas do EXIF em formato racional de Graus, Minutos e Segundos são convertidas para o formato decimal e sexagesimal padrão:
 $$\text{Coordenada} = DD^\circ\,MM'\,SS.S''\,\text{Direction}$$
 
 ---
