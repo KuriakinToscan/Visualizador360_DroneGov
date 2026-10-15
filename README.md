@@ -10,8 +10,7 @@ Visualizador e gerador de relatórios imersivos em 360° com extração de metad
 * **Modificações e Evolução de Interface (2026):** Kuriakin Toscan.
 * **Aprimoramento e Novas Funcionalidades (EXIF, Personalização de Marca, Descrição, 2026):** Luiz Augusto - ([github.com/laoc81](https://github.com/laoc81)).
 * **Atualização do Motor de Renderização v1.1 (Shader Esférico Per-Pixel / Nadir, 2026):** Kuriakin Toscan.
-* **Instituição:** IBAMA — Instituto Brasileiro do Meio Ambiente e dos Recursos Naturais Renováveis.
-* **Unidade de Origem:** DIPAM-TO — Divisão de Proteção Ambiental do Tocantins.
+
 
 ---
 
@@ -50,7 +49,7 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 
 ### 1. Gerar o Visualizador 360° (`360_Gerador.html`)
 
-1. Abra o arquivo [360_Gerador.html](file:///d:/Visualizador360_DroneGov/360_Gerador.html) em qualquer navegador moderno (Google Chrome, Microsoft Edge, Firefox, Brave).
+1. Abra o arquivo **360_Gerador.html** em qualquer navegador moderno (Google Chrome, Microsoft Edge, Firefox, Brave).
 2. **(Opcional) Configurar a Marca Institucional:**
    * Clique em **"Alterar Logo (Upload)"** para selecionar o arquivo de imagem da sua instituição (máx. 4MB) ou mantenha a marca padrão DroneGov.
    * Altere os campos **"Título Principal"** (padrão: `DRONEGOV`) e **"Subtítulo / Órgão"** (padrão: `Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados`).
@@ -80,11 +79,11 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 
 | Arquivo | Descrição |
 | :--- | :--- |
-| [360_Gerador.html](file:///d:/Visualizador360_DroneGov/360_Gerador.html) | Aplicação web principal para configuração de marca, leitura de EXIF e geração do arquivo HTML 360° final. |
-| [README.md](file:///d:/Visualizador360_DroneGov/README.md) | Documentação de referência, guia de utilização e notas técnicas. |
-| [DOCUMENTACAO_TECNICA.md](file:///d:/Visualizador360_DroneGov/DOCUMENTACAO_TECNICA.md) | Documentação técnica aprofundada de arquitetura, shaders e integração com o SEI. |
-| `LogoDroneGov.svg` / `LogoDroneGov.png` | Arquivos de imagem do logotipo oficial DroneGov (vetorial SVG e raster PNG). |
-| [LICENSE](file:///d:/Visualizador360_DroneGov/LICENSE) | Licença de código aberto (MIT License). |
+| **360_Gerador.html** | Aplicação web principal para configuração de marca, leitura de EXIF e geração do arquivo HTML 360° final. |
+| **README.md** | Documentação de referência, guia de utilização e notas técnicas. |
+| **DOCUMENTACAO_TECNICA.md** | Documentação técnica aprofundada de arquitetura, shaders e integração com o SEI. |
+| **LogoDroneGov.svg** / **LogoDroneGov.png** | Arquivos de imagem do logotipo oficial DroneGov (vetorial SVG e raster PNG). |
+| **LICENSE** | Licença de código aberto (MIT License). |
 
 ---
 
@@ -103,4 +102,4 @@ Permitir a visualização e documentação imersiva de imagens 360° capturadas 
 
 ## 📜 Licença
 
-Este projeto é distribuído sob a **Licença MIT**. Consulte o arquivo [LICENSE](file:///d:/Visualizador360_DroneGov/LICENSE) para mais detalhes.
+Este projeto é distribuído sob a **Licença MIT**. Consulte o arquivo [LICENSE] para mais detalhes.
