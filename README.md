@@ -1,105 +1,170 @@
-# Visualizador 360º — DroneGov (Versão 1.1 — 2026)
+# Visualizador 360° DroneGov — Versão 1.1
 
-Visualizador e gerador de relatórios imersivos em 360° com extração de metadados EXIF, motor de renderização com Shader Esférico Per-Pixel e suporte a personalização de marca institucional, desenvolvido para integração com sistemas de processos eletrônicos (como o SEI - Sistema Eletrônico de Informações).
+[![Versão](https://img.shields.io/github/v/release/KuriakinToscan/Visualizador360_DroneGov?label=vers%C3%A3o&color=102a45)](https://github.com/KuriakinToscan/Visualizador360_DroneGov/releases/latest)
+[![Licença MIT](https://img.shields.io/badge/licen%C3%A7a-MIT-2e7d46)](LICENSE)
+![100% offline](https://img.shields.io/badge/100%25-offline-d89e2b)
 
----
+> **Transforme fotos panorâmicas 360° de drone em relatórios interativos para o SEI.**
+> Um único arquivo HTML gera visualizadores 3D autônomos, com metadados da foto e a marca da sua instituição, que abrem em qualquer navegador e funcionam sem internet.
+>
+> **Powered by DroneGov.**
 
-## ⚖️ Nota de Autoria e Evolução
-
-* **Autor e Idealizador Original:** Gilberto Milhomem Marinho Filho.
-* **Modificações e Evolução de Interface (2026):** Kuriakin Toscan.
-* **Aprimoramento e Novas Funcionalidades (EXIF, Personalização de Marca, Descrição, 2026):** Luiz Augusto - ([github.com/laoc81](https://github.com/laoc81)).
-* **Atualização do Motor de Renderização v1.1 (Shader Esférico Per-Pixel / Nadir, 2026):** Kuriakin Toscan.
-
-
----
-
-## 🎯 Objetivo
-
-Permitir a visualização e documentação imersiva de imagens 360° capturadas por drones diretamente em ambientes de processos administrativos (como o SEI), convertendo fotografias panorâmicas em arquivos HTML autônomos e autocontidos (via Base64). Os arquivos gerados podem ser abertos em qualquer navegador sem necessidade de conexão com a internet ou softwares externos.
+### ⬇️ [Baixar a versão mais recente](https://github.com/KuriakinToscan/Visualizador360_DroneGov/releases/latest)
+Na página da versão, baixe o arquivo **`360_Gerador.html`** em *Assets* e abra com duplo clique. Não precisa instalar nada.
 
 ---
 
-## 🛠️ Características Técnicas e Funcionalidades (Versão 1.1)
-
-* **Arquitetura Autônoma (Zero Dependências Externas):** O arquivo HTML final possui todos os recursos (imagens, scripts, folhas de estilo e metadados) embutidos em Base64, funcionando 100% offline.
-* **Motor de Renderização 3D v1.1 (Shader Esférico Per-Pixel GLSL):**
-  * Utiliza **Three.js (r128)** integrado a um shader customizado em GLSL (`THREE.ShaderMaterial`) com projeção trigonométrica matemática calculada pixel a pixel diretamente na GPU.
-  * **Eliminação Definitiva da Distorção do Nadir:** Corrige o "beliscão polar" e as deformações no solo logo abaixo do drone, assegurando fidelidade geométrica total na visualização de alvos terrestres.
-  * **Filtragem Bilinear Pura:** Desativação de mipmaps e forçamento de filtros lineares (`THREE.LinearFilter`) para evitar emendas, costuras polares e borrões de amostragem no solo.
-  * **Orientação Euleriana 'YXZ':** Ordem de rotação rigorosa na câmera para prevenir travamento de gimbal (*gimbal lock*) em inclinações acentuadas.
-  * **Visão Vertical Completa:** Amplitude de inclinação estendida de **-89.9° a +89.9°**, permitindo ao operador olhar diretamente para o solo (Nadir) e para o céu (Zênite) sem cortes ou artefatos.
-* **Compatibilidade Aprimorada UTF-8 BOM:** O gerador injeta o marcador de ordem de byte `\uFEFF` no arquivo HTML gerado, prevenindo problemas de acentuação em ambientes legados, navegadores embutidos e no SEI sob Windows.
-* **Navegação Suave e Controle Imersivo:** Suporte a rotação por arraste (com interpolação suave *lerp*), rotação automática (*auto-rotate*), controle de Zoom/FOV (Field of View) e redefinição de vista.
-* **Personalização de Marca Institucional (Persistente):**
-  * **Logotipo Customizável:** Upload da marca da instituição/órgão (PNG, SVG, JPG, WebP) ou utilização do logotipo padrão oficial DroneGov (`LogoDroneGov.svg` embutido).
-  * **Título e Subtítulo Editáveis:** Definição do título principal (padrão oficial: `DRONEGOV`) e subtítulo (padrão oficial: `Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados`) exibidos no cabeçalho.
-  * **Persistência Local:** As preferências de marca são salvas automaticamente no `localStorage` do navegador para utilização em futuras gerações de relatórios, com opção de restauração instantânea aos padrões oficiais.
-* **Extração e Seleção Seletiva de Metadados EXIF:** Integração com a biblioteca `exif-js` para leitura automática dos dados armazenados na fotografia:
-  * Modelo do drone/câmera;
-  * Data e hora da captura;
-  * Coordenadas GPS (Latitude e Longitude) com formatação em graus sexagesimais;
-  * Dimensões e proporção da imagem (recomendado 2:1 panorâmico);
-  * **Controle de Exibição:** O usuário pode selecionar individualmente quais metadados (modelo, data/hora e/ou coordenadas GPS) serão incluídos nos badges do cabeçalho do visualizador final.
-* **Campo de Descrição Personalizada:** Inclusão de observações, notas de fiscalização ou contexto da inspeção no relatório final.
+## 📌 Sumário
+- [1. O que é](#1-o-que-é)
+- [2. Funcionalidades](#2-funcionalidades)
+- [3. Requisitos](#3-requisitos)
+- [4. Como gerar um visualizador](#4-como-gerar-um-visualizador)
+- [5. Como incluir no SEI](#5-como-incluir-no-sei)
+- [6. Tamanho dos arquivos gerados](#6-tamanho-dos-arquivos-gerados)
+- [7. Usando o visualizador](#7-usando-o-visualizador)
+- [8. Personalização da marca](#8-personalização-da-marca)
+- [9. Solução de problemas](#9-solução-de-problemas)
+- [10. Estrutura do repositório](#10-estrutura-do-repositório)
+- [11. Autoria e créditos](#11-autoria-e-créditos)
+- [12. Histórico de versões e licença](#12-histórico-de-versões-e-licença)
 
 ---
 
-## 🚀 Como Utilizar
+## 1. O que é
 
-### 1. Gerar o Visualizador 360° (`360_Gerador.html`)
+O **Visualizador 360° DroneGov** converte uma fotografia panorâmica esférica (equirretangular, proporção 2:1), capturada por drone ou câmera 360°, em um **arquivo HTML autônomo** com visualização 3D interativa.
 
-1. Abra o arquivo **360_Gerador.html** em qualquer navegador moderno (Google Chrome, Microsoft Edge, Firefox, Brave).
-2. **(Opcional) Configurar a Marca Institucional:**
-   * Clique em **"Alterar Logo (Upload)"** para selecionar o arquivo de imagem da sua instituição (máx. 4MB) ou mantenha a marca padrão DroneGov.
-   * Altere os campos **"Título Principal"** (padrão: `DRONEGOV`) e **"Subtítulo / Órgão"** (padrão: `Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados`).
-   * Se desejar retornar às configurações padrão, clique em **"Restaurar Padrão"**.
-3. **Carregar a Imagem 360°:**
-   * Arraste a imagem panorâmica esférica (proporção 2:1) para a área de soltura ou clique em **"Selecionar Arquivo"**.
-4. **Verificar e Selecionar Metadados & Descrição:**
-   * Confira as informações lidas da imagem (Modelo, Data/Hora, Coordenadas GPS).
-   * Marque ou desmarque os seletores para definir quais dados serão visíveis no relatório (`Modelo do Drone`, `Data e Hora`, `Coordenadas GPS`).
-   * Preencha o campo **"Descrição / Observações"** com as notas técnicas ou de inspeção relevantes.
-5. **Gerar e Baixar:**
-   * Clique em **"Gerar Visualizador 360°"** e salve o arquivo HTML gerado.
+O arquivo gerado reúne a foto, os metadados escolhidos (modelo do drone, data/hora e coordenadas GPS), uma descrição livre e a identidade visual da instituição. Ele foi pensado para ser anexado a processos do **SEI (Sistema Eletrônico de Informações)** e aberto diretamente no navegador, sem programas adicionais e **sem conexão com a internet**.
+
+Tanto o gerador quanto os visualizadores gerados processam tudo localmente: nenhuma foto ou metadado é enviado para servidores externos.
 
 ---
 
-### 2. Anexar e Visualizar no SEI
+## 2. Funcionalidades
 
-1. No processo administrativo do SEI, clique em **"Incluir Documento"** e selecione a opção **"Externo"**.
-2. No campo **"Formato"**, selecione **"Nato-digital"**.
-3. No campo **"Tipo de Conferência"**, selecione a opção adequada (ex: *Documento Original*).
-4. Faça o upload do arquivo HTML gerado.
-5. Ao selecionar o documento na árvore do processo, o SEI abrirá a visualização panorâmica interativa 360° diretamente no navegador interno.
+* 🌐 **100% offline:** o gerador e os visualizadores gerados têm todas as bibliotecas, ícones e imagens embutidos. Nenhum recurso é baixado da internet.
+* 🧭 **Visualização 3D imersiva:** Three.js com shader esférico calculado pixel a pixel, sem distorção no Nadir (solo logo abaixo do drone) nem costuras nos polos; inclinação de -89,9° a +89,9°.
+* 🛰️ **Leitura automática de metadados EXIF:** modelo do drone/câmera, data e hora da captura e coordenadas GPS em graus decimais.
+* ✅ **Escolha do que exibir:** cada metadado pode ser incluído ou não no cabeçalho do visualizador, além de uma descrição livre do local ou do voo.
+* 🛡️ **Marca institucional personalizável:** logotipo, título e subtítulo do cabeçalho, salvos no navegador para os próximos relatórios. Padrão: DroneGov.
+* 📦 **Arquivos compactos:** o visualizador gerado tem cerca de 1,33 vez o tamanho da foto, mais ~0,9 MB fixos (seção 6).
+* 🔤 **Acentuação garantida:** o arquivo é salvo em UTF-8 com BOM, para exibir corretamente os acentos no SEI e em navegadores embutidos no Windows.
+* ❓ **Ajuda embutida:** botão **Ajuda / Instruções** com o passo a passo dentro do próprio gerador.
 
 ---
 
-## 📁 Estrutura do Repositório
+## 3. Requisitos
+
+- Navegador moderno com **WebGL**: Google Chrome, Microsoft Edge, Mozilla Firefox ou Brave (atualizados).
+- Computador com mouse: o gerador e o visualizador são operados com o mouse (não há suporte a gestos de toque nesta versão).
+- Nenhum servidor, instalação ou conexão com a internet.
+
+---
+
+## 4. Como gerar um visualizador
+
+1. Abra o **`360_Gerador.html`** no navegador (duplo clique).
+2. **Marca (opcional):** ajuste o **Título Principal**, o **Subtítulo / Órgão** e, se quiser, troque o logotipo em **Alterar Logo (Upload)** (seção 8).
+3. **Foto:** arraste a panorâmica para a área indicada ou clique para selecionar o arquivo (JPG, PNG ou WebP, de preferência na proporção 2:1). O gerador mostra a pré-visualização, as dimensões, a proporção e os metadados lidos.
+4. **Metadados a exibir:** marque ou desmarque **Modelo do Drone**, **Data e Hora** e **Coordenadas GPS**.
+5. **Nome e descrição:** confira o **Nome do arquivo de saída** e, se quiser, preencha a **Descrição do Local/Voo**.
+6. Clique em **Gerar Visualizador** e depois em **Baixar HTML**.
+7. Para outra foto, clique em **Processar outra imagem**.
+
+---
+
+## 5. Como incluir no SEI
+
+1. No processo, clique em **Incluir Documento** e escolha **Externo**.
+2. Em **Formato**, selecione **Nato-digital**.
+3. Em **Tipo de Conferência**, escolha a opção adequada (por exemplo, *Documento Original*).
+4. Anexe o arquivo `.html` gerado.
+5. Ao abrir o documento na árvore do processo, o SEI exibe a visualização 360° interativa no navegador.
+
+---
+
+## 6. Tamanho dos arquivos gerados
+
+O tamanho do visualizador depende principalmente da foto:
+
+> **Tamanho do visualizador ≈ 1,33 × tamanho da foto + 0,9 MB**
+>
+> (1,33 é o acréscimo da codificação base64; os 0,9 MB fixos incluem o motor 3D e o logotipo.)
+
+| Foto panorâmica | Visualizador gerado (aprox.) |
+| :---: | :---: |
+| 2 MB | 3,6 MB |
+| 3 MB | 4,9 MB |
+| 4 MB | 6,2 MB |
+| 6 MB | 8,9 MB |
+
+O limite de upload do SEI costuma ficar entre **5 MB e 10 MB**, conforme a instalação. Se o arquivo ficar grande demais, reduza a foto para **4096 × 2048 px** ou aumente levemente a compressão JPEG antes de gerar. Um logotipo personalizado pesado também aumenta o arquivo.
+
+---
+
+## 7. Usando o visualizador
+
+- Clique em **▶ Abrir visualização 360°**.
+- **Arrastar com o mouse:** gira a vista (com movimento suavizado).
+- **Roda do mouse** ou botões **+ / −:** zoom (campo de visão de 30° a 110°).
+- **▶ (rotação automática):** liga ou desliga o giro contínuo da vista.
+- **⟳:** volta à vista inicial (campo de visão de 75°).
+- A **bússola** no canto superior direito acompanha a direção horizontal da vista.
+
+---
+
+## 8. Personalização da marca
+
+| Item | Padrão | Como alterar |
+| :--- | :--- | :--- |
+| Logotipo | DroneGov | **Alterar Logo (Upload)**: PNG, SVG, JPG ou WebP de até 4 MB |
+| Título principal | `DRONEGOV` | Campo **Título Principal** |
+| Subtítulo | `Associação Brasileira de Aviação Pública Não Tripulada e Sistemas Embarcados` | Campo **Subtítulo / Órgão** |
+
+- As escolhas ficam salvas no navegador (`localStorage`) e são reaproveitadas nos próximos relatórios.
+- **Restaurar Padrões** volta ao logotipo, título e subtítulo DroneGov.
+- O selo **"Powered by DroneGov"** no rodapé do visualizador é fixo.
+
+---
+
+## 9. Solução de problemas
+
+* **A marca antiga continua aparecendo depois de atualizar o gerador:** as preferências salvas no navegador têm prioridade. Clique em **Restaurar Padrões**.
+* **O logotipo não é salvo:** o espaço de armazenamento do navegador é limitado. Use uma imagem menor (algumas centenas de KB são suficientes).
+* **Imagem distorcida:** confirme que a foto é uma panorâmica esférica equirretangular, na proporção 2:1. O gerador avisa quando a proporção é diferente.
+* **Arquivo grande demais para o SEI:** veja a seção 6.
+* **Tela preta no visualizador:** o navegador precisa de WebGL. Atualize o navegador ou verifique se a aceleração gráfica não está desativada nas configurações.
+* **Metadados "Não disponível":** a foto não traz essas informações no EXIF (comum em imagens editadas ou exportadas por alguns programas).
+
+---
+
+## 10. Estrutura do repositório
 
 | Arquivo | Descrição |
 | :--- | :--- |
-| **360_Gerador.html** | Aplicação web principal para configuração de marca, leitura de EXIF e geração do arquivo HTML 360° final. |
-| **README.md** | Documentação de referência, guia de utilização e notas técnicas. |
-| **DOCUMENTACAO_TECNICA.md** | Documentação técnica aprofundada de arquitetura, shaders e integração com o SEI. |
-| **LogoDroneGov.svg** / **LogoDroneGov.png** | Arquivos de imagem do logotipo oficial DroneGov (vetorial SVG e raster PNG). |
-| **LICENSE** | Licença de código aberto (MIT License). |
+| `360_Gerador.html` | O aplicativo: gerador de visualizadores 360°, com todas as bibliotecas e o logotipo embutidos |
+| `README.md` | Este guia |
+| `DOCUMENTACAO_TECNICA.md` | Documentação técnica: arquitetura, metadados, motor 3D e integração com o SEI |
+| `CHANGELOG.md` | Histórico de versões |
+| `assets/LogoDroneGov.png` | Arquivo de origem do logotipo DroneGov (2130 × 1984 px) |
+| `LICENSE` | Licença MIT |
 
 ---
 
-## ⚠️ Solução de Problemas (Troubleshooting)
+## 11. Autoria e créditos
 
-* **Navegador Não Exibe Alterações / Persistência de Logo Antiga:** O gerador salva as preferências de marca no `localStorage` do navegador. Se as atualizações não aparecerem imediatamente após uma nova versão:
-  1. Clique no botão **"Restaurar Padrão"** na interface do gerador; ou
-  2. Faça uma limpeza forçada de cache pressionando **`Ctrl + F5`** (ou `Ctrl + Shift + R`); ou
-  3. No console do desenvolvedor (`F12`), execute `localStorage.clear()` e recarregue a página.
-* **Botão "Alterar Logo" Não Responde:** Certifique-se de que está utilizando a versão atualizada do `360_Gerador.html`, onde a inicialização da marca foi corrigida.
-* **Imagem Distorcida:** Verifique se a foto original foi capturada no modo panorâmico esférico equirretangular (proporção de aspecto 2:1).
-* **Arquivo Muito Grande para o SEI:** O limite prático de upload no SEI costuma ser entre 5 MB e 10 MB. Se a imagem for muito pesada, recomenda-se redimensioná-la para 4096×2048px ou comprimi-la ligeiramente antes do processamento.
-* **Tela Preta no Visualizador:** Pode ocorrer caso os scripts CDN não consigam carregar por bloqueio de rede corporativa. O arquivo gerado utiliza carregamento resiliente.
+* **Autor e idealizador original:** Gilberto Milhomem Marinho Filho.
+* **Evolução de interface, motor de renderização e versão 1.1:** Kuriakin Toscan.
+* **Metadados EXIF, personalização de marca e descrição:** Luiz Augusto ([github.com/laoc81](https://github.com/laoc81)).
+
+**Bibliotecas embutidas (todas sob licença MIT):**
+* [Three.js](https://threejs.org) r128 — © 2010-2021 Three.js Authors.
+* [EXIF-js](https://github.com/exif-js/exif-js) 2.3.0 — © Jacob Seidelin.
+* [Phosphor Icons](https://phosphoricons.com) — © Phosphor Icons.
 
 ---
 
-## 📜 Licença
+## 12. Histórico de versões e licença
 
-Este projeto é distribuído sob a **Licença MIT**. Consulte o arquivo [LICENSE] para mais detalhes.
+* As mudanças de cada versão estão no [`CHANGELOG.md`](CHANGELOG.md), e as versões publicadas, com o arquivo para download, em [Releases](https://github.com/KuriakinToscan/Visualizador360_DroneGov/releases).
+* Código distribuído sob a **[Licença MIT](LICENSE)**. O logotipo DroneGov é marca do projeto DroneGov.
